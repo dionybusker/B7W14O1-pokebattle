@@ -8,4 +8,8 @@ class Attack {
         $this->name = $name;
         $this->hitpoints = $hitpoints;
     }
+
+    public function __toString() {
+        return json_encode($this);
+    }
 }
