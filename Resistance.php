@@ -8,4 +8,8 @@ class Resistance {
         $this->name = $name;
         $this->value = $value;
     }
+
+    public function __toString() {
+        return json_encode($this);
+    }
 }

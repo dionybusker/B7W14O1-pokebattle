@@ -8,4 +8,8 @@ class Weakness {
         $this->name = $name;
         $this->multiplier = $multiplier;
     }
+
+    public function __toString() {
+        return json_encode($this);
+    }
 }
