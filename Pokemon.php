@@ -22,11 +22,36 @@ class Pokemon {
         return json_encode($this);
     }
 
-    public function attack() {
-        // de schade van een Attack wordt vermenigvuldigd met de multiplier van de Weakness indien de EnergyType van de Weakness gelijk is aan de EnergyType van de aanvallende Pokemon
+    public function attack($attackingPokemon, $attack, $damagePokemon) {
+        echo "<br>" . $attackingPokemon->name . ": " . $attackingPokemon->health . " HP <br>";
+        echo $damagePokemon->name . ": " . $damagePokemon->health . " HP <br>";
         
-        // de schade van een Attack wordt verminderd met de waarde van de Resistance indien de EnergyType van de Resistance gelijk is aan de EnergyType van de aanvallende Pokemon
+        $this->damage($attack->hitpoints, $damagePokemon);        
 
+        echo $attackingPokemon->name . " used " . $attack->name . "!" . "<br>";
+
+        echo "It damaged the other Pokemon! <br>";
+
+        echo $damagePokemon->name . " has " . $damagePokemon->health . " HP left. <br>";
     }
+    
+    public function damage($damage, $damagePokemon) {
+        foreach ($damagePokemon->weakness as $weaknessPokemon) {
+            if ($this->energyType->name == $weaknessPokemon) {
+                $damage = $damage * $damagePokemon->weakness->multiplier;
+            }
+        }
 
+        foreach ($damagePokemon->resistance as $resistancePokemon) {
+            if ($this->energyType->name == $resistancePokemon) {
+                $damage = $damage - $damagePokemon->resistance->value;
+            }
+        }
+
+        echo '<br>';
+
+        $this->damage = $damage;
+
+        $damagePokemon->health = $damagePokemon->health - $damage;
+    }
 }
