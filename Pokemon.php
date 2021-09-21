@@ -8,7 +8,8 @@ class Pokemon {
     public $weakness;
     public $resistance;
 
-
+    public static $count = 0;
+    
     public function __construct($name, $energyType, $health, $attacks, $weakness, $resistance) {
         $this->name = $name;
         $this->energyType = $energyType;
@@ -16,35 +17,60 @@ class Pokemon {
         $this->attacks = $attacks;
         $this->weakness = $weakness;
         $this->resistance = $resistance;
+        
+        // Every new construction raises the Pokemon total
+        Pokemon::$count++;
     }
 
     public function __toString() {
         return json_encode($this);
     }
 
-    public function attack($attackingPokemon, $attack, $damagePokemon) {
-        echo "<br>" . $attackingPokemon->name . ": " . $attackingPokemon->health . " HP <br>";
-        echo $damagePokemon->name . ": " . $damagePokemon->health . " HP <br>";
+    /**
+     * attack() method
+     *
+     * @param [object] $attackingPokemon
+     * @param [object] $attack
+     * @param [object] $damagedPokemon
+     * 
+     * Print text from the attacks
+     */
+    public function attack($attackingPokemon, $attack, $damagedPokemon) {
+        echo $attackingPokemon->name . ": " . $attackingPokemon->health . " HP <br>";
+        echo $damagedPokemon->name . ": " . $damagedPokemon->health . " HP <br>";
         
-        $this->damage($attack->hitpoints, $damagePokemon);        
+        $this->damage($attack->hitpoints, $damagedPokemon);        
 
         echo $attackingPokemon->name . " used " . $attack->name . "!" . "<br>";
 
-        echo "It damaged the other Pokemon! <br>";
+        echo "It damaged the other Pokemon! <br><br>";
 
-        echo $damagePokemon->name . " has " . $damagePokemon->health . " HP left. <br>";
+        if ($damagedPokemon->health <= 0) {
+            $damagedPokemon->health = 0;
+
+            echo $damagedPokemon->name . " fainted!";
+            echo "<br>";
+        }
     }
     
-    public function damage($damage, $damagePokemon) {
-        foreach ($damagePokemon->weakness as $weaknessPokemon) {
+    /**
+     * damage() method
+     *
+     * @param [int] $damage
+     * @param [object] $damagedPokemon
+     * 
+     * Calcalute damage taken
+     */
+    public function damage($damage, $damagedPokemon) {
+        foreach ($damagedPokemon->weakness as $weaknessPokemon) {
             if ($this->energyType->name == $weaknessPokemon) {
-                $damage = $damage * $damagePokemon->weakness->multiplier;
+                $damage = $damage * $damagedPokemon->weakness->multiplier;
             }
         }
 
-        foreach ($damagePokemon->resistance as $resistancePokemon) {
+        foreach ($damagedPokemon->resistance as $resistancePokemon) {
             if ($this->energyType->name == $resistancePokemon) {
-                $damage = $damage - $damagePokemon->resistance->value;
+                $damage = $damage - $damagedPokemon->resistance->value;
             }
         }
 
@@ -52,6 +78,19 @@ class Pokemon {
 
         $this->damage = $damage;
 
-        $damagePokemon->health = $damagePokemon->health - $damage;
+        $damagedPokemon->health = $damagedPokemon->health - $damage;
+    }
+
+    /**
+     * getPopulation() method
+     *
+     * Print the total of Pokemon which are still alive
+     */
+    public static function getPopulation() {
+        echo "Currently living Pokemon: " . self::$count;
+    }
+
+    public function __destruct() {
+        Pokemon::$count--;
     }
 }
