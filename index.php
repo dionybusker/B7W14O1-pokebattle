@@ -1,39 +1,58 @@
 <?php
 
-require "Pokemon.php";
-require "Pikachu.php";
-require "Charmeleon.php";
+require_once("classes/Pikachu.php");
+require_once("classes/Charmeleon.php");
+require_once("classes/EnergyType.php");
+require_once("classes/Attack.php");
+require_once("classes/Weakness.php");
+require_once("classes/Resistance.php");
 
-echo "<h3>Pokémon</h3>";
-$pikachu = new Pikachu("Pikachu");
-$charmeleon = new Charmeleon("Charmeleon");
+$energyTypeLightning = new EnergyType("Lightning");
+$energyTypeFire = new EnergyType("Fire");
 
-print_r("<pre>" . $pikachu . "</pre>");
-print_r("<pre>" . $charmeleon . "</pre>");
+$attackElectricRing = new Attack("Electric Ring", 50);
+$attackPikaPunch = new Attack("Pika Punch", 20);
+$attackHeadButt = new Attack("Head Butt", 10);
+$attackFlare = new Attack("Flare", 30);
 
-Pokemon::getPopulation();
+$weaknessFire = new Weakness("Fire", 1.5);
+$weaknessWater = new Weakness("Water", 2);
 
-echo "<h3>Fight</h3>";
-for ($loop = 0; $loop < 2; $loop++) {
-    echo "<strong>Attack #" . ($loop + 1) . "</strong> <br>";
-    for ($i = 0; $i < 2; $i++) {
-        if ($pikachu->health > 0) {
-            if ($pikachu->attacks[$i]->name == "Electric Ring") {
-                $pikachu->attack($pikachu, $pikachu->attacks[$i], $charmeleon);
+$resistanceFighting = new Resistance("Fighting", 20);
+$resistanceLightning = new Resistance("Lightning", 10);
+
+$pikachu = new Pikachu("Pika", $energyTypeLightning, 60, 60, [$attackElectricRing, $attackPikaPunch], $weaknessFire, $resistanceFighting);
+$charmeleon = new Charmeleon("Charmeleon", $energyTypeFire, 60, 60, [$attackHeadButt, $attackFlare], $weaknessWater, $resistanceLightning);
+
+echo $pikachu->getName() . " has " . $pikachu->getHealth() . " hp. <br>";
+echo $charmeleon->getName() . " has " . $charmeleon->getHealth() . " hp. <br>";
+
+echo "<br>";
+echo Pokemon::getPopulation();
+echo "<br><br>";
+
+for ($i = 0; $i < 2; $i++) {
+    if ($pikachu->getHealth() > 0) {
+        foreach ($pikachu->getAttacks() as $pikachuAttacks) {
+            if ($pikachuAttacks->getName() == "Electric Ring") {
+                echo $pikachu->attack($charmeleon, $pikachuAttacks) . "<br>";
             }
-        } else {
-            unset($pikachu);
         }
-    
-        if ($charmeleon->health > 0) {
-            if ($charmeleon->attacks[$i]->name == "Flare") {
-                $charmeleon->attack($charmeleon, $charmeleon->attacks[$i], $pikachu);
+    } else {
+        unset($pikachu);
+    }
+
+    if ($charmeleon->getHealth() > 0) {
+        foreach ($charmeleon->getAttacks() as $charmeleonAttacks) {
+            if ($charmeleonAttacks->getName() == "Flare") {
+                echo $charmeleon->attack($pikachu, $charmeleonAttacks) . "<br>";
             }
-        } else {
-            unset($charmeleon);
         }
+    } else {
+        unset($charmeleon);
     }
 }
 
-echo "<h3>Statistics</h3>";
-Pokemon::getPopulation();
+echo "<br>";
+
+echo Pokemon::getPopulation();
