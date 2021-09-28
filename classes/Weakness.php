@@ -4,6 +4,10 @@ class Weakness {
     private $name;
     private $multiplier;
 
+    /**
+     * @param $name
+     * @param $multiplier
+     */
     public function __construct($name, $multiplier) {
         $this->name = $name;
         $this->multiplier = $multiplier;

@@ -4,6 +4,10 @@ class Attack {
     private $name;
     private $damage;
 
+    /**
+     * @param $name
+     * @param $damage
+     */
     public function __construct($name, $damage) {
         $this->name = $name;
         $this->damage = $damage;

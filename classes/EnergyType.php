@@ -2,15 +2,12 @@
 
 class EnergyType {
     private $name;
-    // private $value;
 
+    /**
+     * @param $name
+     */
     public function __construct($name) {
         $this->name = $name;
-        // $this->value = $value;
-    }
-
-    public function __toString() {
-        return json_encode($this);
     }
 
     /**

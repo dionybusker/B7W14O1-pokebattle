@@ -4,6 +4,10 @@ class Resistance {
     private $name;
     private $reduction;
 
+    /**
+     * @param $name
+     * @param $reduction
+     */
     public function __construct($name, $reduction) {
         $this->name = $name;
         $this->reduction = $reduction;

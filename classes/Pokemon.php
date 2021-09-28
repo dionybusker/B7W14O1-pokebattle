@@ -10,7 +10,16 @@ class Pokemon {
     private $resistance;
 
     private static $count = 0;
-    
+
+    /**
+     * @param $name
+     * @param $energyType
+     * @param $hitpoints
+     * @param $health
+     * @param $attacks
+     * @param $weakness
+     * @param $resistance
+     */
     public function __construct($name, $energyType, $hitpoints, $health, $attacks, $weakness, $resistance) {
         $this->name = $name;
         $this->energyType = $energyType;
@@ -55,14 +64,19 @@ class Pokemon {
         }
     }
 
+    /**
+     * @return string
+     */
     public static function getPopulation() {
         return "Currently living Pokemon: " . self::$count;
     }
 
+    /**
+     * @return int
+     */
     public function __destruct() {
-        Pokemon::$count--;
+        return Pokemon::$count--;
     }
-
 
     /**
      * @return mixed
