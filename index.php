@@ -27,6 +27,12 @@ $charmeleon = new Charmeleon("Charmeleon", $energyTypeFire, 60, 60, [$attackHead
 echo $pikachu->getName() . " has " . $pikachu->getHealth() . " hp. <br>";
 echo $charmeleon->getName() . " has " . $charmeleon->getHealth() . " hp. <br>";
 
+//$pokemonList = [$pikachu, $charmeleon]; // hierdoor blijft Pokemon::getPopulation() op 2 op het eind
+
+//Pokemon::getPokemonList($pokemonList);
+
+//echo Pokemon::getPopulationHealth();
+
 echo "<br>";
 echo Pokemon::getPopulation();
 echo "<br><br>";
@@ -56,3 +62,4 @@ for ($i = 0; $i < 2; $i++) {
 echo "<br>";
 
 echo Pokemon::getPopulation();
+

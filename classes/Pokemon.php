@@ -3,27 +3,29 @@
 class Pokemon {
     private $name;
     private $energyType;
-    private $hitpoints;
+    private $maxHealth;
     private $health;
     private $attacks;
     private $weakness;
     private $resistance;
 
     private static $count = 0;
+    private static $pokemonList;
+    private static $averageHealth;
 
     /**
      * @param $name
      * @param $energyType
-     * @param $hitpoints
+     * @param $maxHealth
      * @param $health
      * @param $attacks
      * @param $weakness
      * @param $resistance
      */
-    public function __construct($name, $energyType, $hitpoints, $health, $attacks, $weakness, $resistance) {
+    public function __construct($name, $energyType, $maxHealth, $health, $attacks, $weakness, $resistance) {
         $this->name = $name;
         $this->energyType = $energyType;
-        $this->hitpoints = $hitpoints;
+        $this->maxHealth = $maxHealth;
         $this->health = $health;
         $this->attacks = $attacks;
         $this->weakness = $weakness;
@@ -49,11 +51,11 @@ class Pokemon {
      * @param $damage
      */
     public function dealDamage($target, $damage) {
-        if ($this->energyType->getName() == $target->weakness->getName()) {
+        if ($this->energyType->getName() == $target->weakness->getEnergyType()) {
             $damage = $damage * $target->weakness->getMultiplier();
         }
 
-        if ($this->energyType->getName() == $target->resistance->getName()) {
+        if ($this->energyType->getName() == $target->resistance->getEnergyType()) {
             $damage = $damage - $target->resistance->getReduction();
         }
 
@@ -69,6 +71,24 @@ class Pokemon {
      */
     public static function getPopulation() {
         return "Currently living Pokemon: " . self::$count;
+    }
+
+    public static function getPopulationHealth() {
+        foreach(self::$pokemonList as $list) {
+//            echo $list->health;
+            self::$averageHealth += $list->health;
+        }
+            self::$averageHealth = self::$averageHealth / Pokemon::$count;
+        /**
+         * average health
+         *
+         */
+        return self::$averageHealth;
+    }
+
+    public static function getPokemonList($pokemonList) {
+        self::$pokemonList = $pokemonList;
+        return self::$pokemonList;
     }
 
     /**
@@ -113,17 +133,17 @@ class Pokemon {
     /**
      * @return mixed
      */
-    public function getHitpoints()
+    public function getmaxHealth()
     {
-        return $this->hitpoints;
+        return $this->maxHealth;
     }
 
     /**
      * @param mixed $hitpoints
      */
-    public function setHitpoints($hitpoints)
+    public function setMaxHealth($maxHealth)
     {
-        $this->hitpoints = $hitpoints;
+        $this->maxHealth = $maxHealth;
     }
 
     /**

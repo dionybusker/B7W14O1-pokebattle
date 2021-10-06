@@ -1,32 +1,32 @@
 <?php
 
 class Resistance {
-    private $name;
+    private $energyType;
     private $reduction;
 
     /**
-     * @param $name
+     * @param $energyType
      * @param $reduction
      */
-    public function __construct($name, $reduction) {
-        $this->name = $name;
+    public function __construct($energyType, $reduction) {
+        $this->energyType = $energyType;
         $this->reduction = $reduction;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getEnergyType()
     {
-        return $this->name;
+        return $this->energyType;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $energyType
      */
-    public function setName($name)
+    public function setEnergyType($energyType)
     {
-        $this->name = $name;
+        $this->energyType = $energyType;
     }
 
     /**

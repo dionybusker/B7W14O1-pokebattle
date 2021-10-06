@@ -1,32 +1,32 @@
 <?php
 
 class Weakness {
-    private $name;
+    private $energyType;
     private $multiplier;
 
     /**
-     * @param $name
+     * @param $energyType
      * @param $multiplier
      */
-    public function __construct($name, $multiplier) {
-        $this->name = $name;
+    public function __construct($energyType, $multiplier) {
+        $this->energyType = $energyType;
         $this->multiplier = $multiplier;
     }
 
     /**
      * @return mixed
      */
-    public function getName()
+    public function getEnergyType()
     {
-        return $this->name;
+        return $this->energyType;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $energyType
      */
-    public function setName($name)
+    public function setEnergyType($energyType)
     {
-        $this->name = $name;
+        $this->energyType = $energyType;
     }
 
     /**

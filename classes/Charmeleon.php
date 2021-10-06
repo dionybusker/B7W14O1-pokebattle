@@ -7,13 +7,13 @@ class Charmeleon extends Pokemon {
     /**
      * @param $name
      * @param $energyType
-     * @param $hitpoints
+     * @param $maxHealth
      * @param $health
      * @param $attacks
      * @param $weakness
      * @param $resistance
      */
-    public function __construct($name, $energyType, $hitpoints, $health, $attacks, $weakness, $resistance) {
-        parent::__construct($name, $energyType, $hitpoints, $health, $attacks, $weakness, $resistance);
+    public function __construct($name, $energyType, $maxHealth, $health, $attacks, $weakness, $resistance) {
+        parent::__construct($name, $energyType, $maxHealth, $health, $attacks, $weakness, $resistance);
     }
 }
